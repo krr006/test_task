@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Результаты решения квадратного уравнения</title>
+  <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #495057;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #343a40;
+        }
+        .container {
+            background-color: #ffffff;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            display: inline-block;
+            max-width: 600px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        p {
+            font-size: 1.1em;
+            margin: 10px 0;
+        }
+        canvas {
+            border: 1px solid #ced4da;
+            background-color: #ffffff;
+            margin: 20px auto;
+            display: block;
+        }
+        .error {
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+<h1>Результат решения квадратного уравнения</h1>
+
+<div th:if="${result != null}" class="container">
+  <h2>Результат:</h2>
+  <p>a = <span th:text="${result.a}"></span></p>
+  <p>b = <span th:text="${result.b}"></span></p>
+  <p>c = <span th:text="${result.c}"></span></p>
+  <p>√(b² - 4ac) = <span th:text="${result.discriminant}"></span></p>
+  <p>x = <span th:text="${result.x}"></span></p>
+  <h3>График:</h3>
+  <canvas id="graph" width="400" height="400"></canvas>
+  <script>
+            const ctx = document.getElementById('graph').getContext('2d');
+            const x = [[${result.x}]];
+            const y = [[${result.y}]];
+
+            // Рисуем оси
+            ctx.beginPath();
+            ctx.moveTo(0, 200);
+            ctx.lineTo(400, 200);
+            ctx.moveTo(200, 0);
+            ctx.lineTo(200, 400);
+            ctx.stroke();
+
+            // Рисуем точку
+            ctx.beginPath();
+            ctx.arc(200 + x, 200 - y, 5, 0, 2 * Math.PI);
+            ctx.fillStyle = '#007bff';
+            ctx.fill();
+            ctx.fillStyle = '#000';
+            ctx.fillText(`(${x}, ${y})`, 205 + x, 195 - y);
+        </script>
+</div>
+
+<div th:if="${error != null}" class="container error">
+  <h2>Ошибка:</h2>
+  <p th:text="${error}"></p>
+</div>
+</body>
+</html>

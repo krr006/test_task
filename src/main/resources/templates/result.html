@@ -56,7 +56,6 @@
             const x = [[${result.x}]];
             const y = [[${result.y}]];
 
-            // Рисуем оси
             ctx.beginPath();
             ctx.moveTo(0, 200);
             ctx.lineTo(400, 200);
@@ -64,7 +63,6 @@
             ctx.lineTo(200, 400);
             ctx.stroke();
 
-            // Рисуем точку
             ctx.beginPath();
             ctx.arc(200 + x, 200 - y, 5, 0, 2 * Math.PI);
             ctx.fillStyle = '#007bff';
